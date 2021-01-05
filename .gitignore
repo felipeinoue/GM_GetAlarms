@@ -3,10 +3,8 @@
 # - CC65
 
 # Assembled binaries and object directories
-obj/
-a.out
-*.bin
-*.a26
+*.xls
+*.xlsx
 
 # Add in special Atari 7800-based binaries for good measure
-*.a78
+
