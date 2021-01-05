@@ -89,6 +89,14 @@ def CreateAlarms(filename):
         else:
             ls_element.append(f'PPX{x}')
 
+    # PPExx
+    x = 0
+    for x in range(30):
+        if x < 10:
+            ls_element.append(f'PPE0{x}')
+        else:
+            ls_element.append(f'PPE{x}')
+
     # Cxx
     x = 0
     for x in range(60):
@@ -140,7 +148,7 @@ def CreateAlarms(filename):
                 for obj in ls_obj:
 
                     # fill values list
-                    if f'Block {element}' in obj.description:
+                    if f'I/O Block {element}' in obj.description:
                         ls_value.append(obj.value)
 
                 # if list not empty append to main list
@@ -201,6 +209,32 @@ def CreateAlarms(filename):
 
             # get PPXxx
             if 'PPX' in element:
+                for obj in ls_obj:
+
+                    # fill values list
+                    if f'Present {element}' in obj.description:
+                        ls_value.append(obj.value)
+
+                # if list not empty append to main list
+                if ls_value:
+                    # sort ascescending
+                    ls_value.sort()
+                    ls.append(element)
+
+                    # append to list
+                    try:
+                        ls.append(f'{ls_value[0]}')
+                        ls.append(f'{ls_value[1]}')
+                    except:
+                        ls.append('deu ruim tentando escrever os valores, verificar')
+
+                    ls.append('')
+
+                    # clear values
+                    ls_value = []
+
+            # get PPExx
+            if 'PPE' in element:
                 for obj in ls_obj:
 
                     # fill values list
@@ -288,7 +322,7 @@ def CreateAlarms(filename):
                 for obj in ls_obj:
 
                     # fill values list
-                    if f'{element} DNET' in obj.description:
+                    if f'Safety Block {element} Dnet' in obj.description:
                         ls_value.append(obj.value)
 
                 # if list not empty append to main list
