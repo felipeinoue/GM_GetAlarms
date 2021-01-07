@@ -118,6 +118,19 @@ def CreateAlarms(filename):
         else:
             ls_element.append(f'SBK{x}')
 
+    # L1Cxx
+    x = 0
+    for x in range(91):
+        if x < 10:
+            ls_element.append(f'L1C0{x}')
+        else:
+            ls_element.append(f'L1C{x}')
+
+    # L1Pxx
+    x = 0
+    for x in range(99):
+            ls_element.append(f'L1PX{x}')
+
     # iterate trought all programs
     for routine in ls_routines:
 
@@ -212,7 +225,7 @@ def CreateAlarms(filename):
                 for obj in ls_obj:
 
                     # fill values list
-                    if f'Present {element}' in obj.description:
+                    if f'{element}' in obj.description:
                         ls_value.append(obj.value)
 
                 # if list not empty append to main list
@@ -238,7 +251,7 @@ def CreateAlarms(filename):
                 for obj in ls_obj:
 
                     # fill values list
-                    if f'Present {element}' in obj.description:
+                    if f'{element}' in obj.description:
                         ls_value.append(obj.value)
 
                 # if list not empty append to main list
@@ -343,6 +356,65 @@ def CreateAlarms(filename):
                             ls.append('soma dos valores diferente do esperado, verificar')
                     except:
                         ls.append('deu ruim fazendo a verificação dos valores, verificar')
+
+                    ls.append('')
+
+                    # clear values
+                    ls_value = []
+
+            # get L1Cxx
+            if 'L1C' in element:
+                for obj in ls_obj:
+
+                    # fill values list
+                    if f'{element}' in obj.description:
+                        ls_value.append(obj.value)
+
+                # if list not empty append to main list
+                if ls_value:
+                    # sort ascescending
+                    ls_value.sort()
+                    ls.append(element)
+
+                    # append to list
+                    try:
+                        ls.append(f'{ls_value[0]} - {ls_value[1]}')
+                        ls.append(f'{ls_value[2]} - {ls_value[3]}')
+                    except:
+                        ls.append('deu ruim tentando escrever os valores, verificar')
+
+                    # check value numbers
+                    try:
+                        if not (ls_value[0] - ls_value[1] + 1 == 0) or not (ls_value[2] - ls_value[3] + 1 == 0):
+                            ls.append('soma dos valores diferente do esperado, verificar')
+                    except:
+                        ls.append('deu ruim fazendo a verificação dos valores, verificar')
+
+                    ls.append('')
+
+                    # clear values
+                    ls_value = []
+
+            # get L1Pxx
+            if 'L1PX' in element:
+                for obj in ls_obj:
+
+                    # fill values list
+                    if f'{element}' in obj.description:
+                        ls_value.append(obj.value)
+
+                # if list not empty append to main list
+                if ls_value:
+                    # sort ascescending
+                    ls_value.sort()
+                    ls.append(element)
+
+                    # append to list
+                    try:
+                        ls.append(f'{ls_value[0]}')
+                        ls.append(f'{ls_value[1]}')
+                    except:
+                        ls.append('deu ruim tentando escrever os valores, verificar')
 
                     ls.append('')
 
