@@ -91,7 +91,7 @@ def CreateAlarms(filename):
 
     # PPExx
     x = 0
-    for x in range(30):
+    for x in range(50):
         if x < 10:
             ls_element.append(f'PPE0{x}')
         else:
